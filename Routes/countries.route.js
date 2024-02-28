@@ -7,4 +7,6 @@ router.get('/:id',CountryController.getCountryById);
 
 // Post Methods
 router.post('/',CountryController.createCountry);
+
+
 module.exports = router;

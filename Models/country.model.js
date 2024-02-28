@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const countrySchema = mongoose.Schema({
+    _id:{
+        type:Number
+    },
     countryName:{
         type:String,
         required:true,
@@ -24,7 +27,7 @@ const countrySchema = mongoose.Schema({
 countrySchema.virtual("trips",{
     ref:"Trip",
     localField:"_id",
-    foreignField:"tripCountry.countryId"
+    foreignField:"countryId"
 })
 countrySchema.virtual("hotels",{
     ref:"Hotel",

@@ -1,0 +1,1 @@
+const ReviewModel = require('../models/review.model');

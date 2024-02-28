@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const hotelSchema = mongoose.Schema({
+    _id:{
+        type:Number
+    },
     hotelName:{
         type:String,
         required:true,
@@ -19,7 +22,7 @@ const hotelSchema = mongoose.Schema({
     hotelImages:[String],
     hotelCountry:{
         countryId:{
-            type:mongoose.Schema.Types.ObjectId,
+            type:Number,
             ref:'Country'
         },
         countryName:{
@@ -35,15 +38,15 @@ const hotelSchema = mongoose.Schema({
     }
 },{ timestamps:true})
 
-hotelSchema.virtual('reviews',{
-    ref:'Review',
-    localField:'_id',
-    foreignField:'reviewHotel'
-})
+// hotelSchema.virtual('reviews',{
+//     ref:'Review',
+//     localField:'_id',
+//     foreignField:'reviewHotel'
+// })
 hotelSchema.virtual('trips',{
     ref:'Trip',
     localField:'_id',
-    foreignField:'hotelId'
+    foreignField:'hotel.id'
 })
 
 const Hotel = mongoose.model('Hotel',hotelSchema);

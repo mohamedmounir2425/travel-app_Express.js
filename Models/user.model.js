@@ -13,55 +13,22 @@ const userSchema = mongoose.Schema({
     },
     email:{
         type:String,
-        required:true,
         trim:true,
         uniq:true,
+        required:true,
         validate(value){
             if(!validator.isEmail(value)){
                 throw new Error('Invalid email');
             }
         }
     },
-    age:{
-        type:Number,
-        required:true,
-        trim:true,
-        min:18,
-        max:60
-    },
-    gender:{
-        type:String,
-        required:true,
-        trim:true,
-        enum:['Male','Female']
-    },
-    address:{
-        city:{
-            type:String,
-            trim:true,
-            maxLength: 20,
-            lowercase:true,
-        },
-        country:{
-            type:String,
-            trim:true,
-            maxLength: 50,
-            lowercase:true,
-        }
-    }
-    ,
-    phone:{
-        type:String,
-        trim:true,
-        validate(value){
-            if(!validator.isMobilePhone(value)){
-                throw new Error('Invalid phone number');
-            }
-        }
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true // Allows null values but still enforces uniqueness
     },
     password:{
         type:String,
-        required:true,
         trim:true,
         // match: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
     },

@@ -3,24 +3,28 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-
 // Database connection
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DB);
 
 
+// Middlewares
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
+
+
 // Routes
 const countryRoutes = require('./Routes/countries.route');
 const hotelRoutes = require('./Routes/hotels.route');
-// const userRoutes = require('../routes/user.route')
+const userRoutes = require('./Routes/users.route')
+const tripsRoutes = require('./Routes/trips.route');
 // const admenRoutes = require('../routes/Admen.route')
 app.use('/countries', countryRoutes);
 app.use('/hotels', hotelRoutes);
-
+app.use('/users', userRoutes);
+app.use('/trips',tripsRoutes);
 
 // Error handler
 app.all("*",(req,res)=>{

@@ -12,13 +12,13 @@ class CountryController{
     }
     static async getCountryById(req,res){
         try {
-            const country = await CountryModel.findById(req.params.id)
+            const country = await CountryModel.findOne({_id:req.params.id})
             await country.populate("hotels");
-            // await country.populate("trips");
+            await country.populate("trips");
             const data = {
                 country,
                 hotels:country.hotels,
-                // trips:country.trips
+                trips:country.trips
             }
             resData(res,200,true,data,'Country Data')
         } catch (error) {

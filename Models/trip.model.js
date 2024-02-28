@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const tripSchema = mongoose.Schema({
-    tripName:{
+    _id:{
+        type:Number
+    },
+    name:{
         type:String,
         required:true,
         trim:true,
@@ -9,7 +12,7 @@ const tripSchema = mongoose.Schema({
         maxLength: 20,
         lowercase:true,
     },
-    tripDescription:{
+    description:{
         type:String,
         required:true,
         trim:true,
@@ -17,31 +20,20 @@ const tripSchema = mongoose.Schema({
         maxLength: 100,
         lowercase:true,
     },
-    tripPrice:{
+    price:{
         type:Number,
         required:true,
         trim:true,
         min:100,
         max:10000
     },
-    tripDate:{
-        type:Date,
-        required:true,
-        trim:true,
-    },
-    tripImg:{
+    imgUrl:{
         type:String,
         trim:true,
     },
-    tripCountry:{
-        countryId:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'country'
-        },
-        countryName:{
-            type:String,
-            trim:true
-        }
+    countryId:{
+        type:Number,
+        ref:'country'
     },
     tripRate:{
         type:Number,
@@ -57,35 +49,40 @@ const tripSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-    hotelId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Hotel'
+    hotel:{
+        id:{
+            type:Number,
+            ref:'Hotel'
+        },
+        name:{
+            type: String,
+            trim:true,
+        }
     },
     offer:{
         type:Number,
     },
-    tripCategory:{
+    categoryId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'category'
     },
-    tourPlan:{
-        day:{
-            type:String,
-            trim:true,
-        }
-    },
-    included:[String],
-    excluded:[String]
+    tourPlan:[String],
+    include:[String],
+    exclude:[String],
+    Duration:{
+        type:String,
+        trim:true
+    }
 },{ timestamps:true})
 
-tripSchema.vertical('reviews',{
-    ref:'Review',
-    localField:'_id',
-    foreignField:'reviewTrip'
-})
-tripSchema.vertical('hotel',{
+// tripSchema.virtual('reviews',{
+//     ref:'Review',
+//     localField:'_id',
+//     foreignField:'reviewTrip'
+// })
+tripSchema.virtual('hotelData',{
     ref:'Hotel',
-    localField:'hotelId',
+    localField:'hotel.id',
     foreignField:'_id'
 })
 

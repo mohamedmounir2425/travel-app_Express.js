@@ -11,10 +11,15 @@ class HotelController {
     }
     static async getHotelById(req,res){
         try {
-            const hotel = await HotelModel.findById(req.params.id);
-            const reviews = await hotel.populate("reviews").execPopulate();
-            const trips = await hotel.populate("trips").execPopulate();
-            resData(res,200,true,{hotel,reviews,trips},'Hotel Data')
+            console.log(req.params.id)
+            const hotel = await HotelModel.findOne({_id:req.params.id});
+            // const reviews = await hotel.populate("reviews").execPopulate();
+            await hotel.populate("trips");
+            const data = {
+                hotel,
+                trips:hotel.trips
+            }
+            resData(res,200,true,data,'Hotel Data')
         } catch (error) {
             resData(res,500,false,[],error.message)
         }
