@@ -24,7 +24,7 @@ const authAdmin = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userData = await userModel.findOne({
             _id: decoded._id,
-            isAdmin: "true",
+            isAdmin: true,
             "tokens.token": token
         })
         if (!userData) throw new Error("Invalid token")
