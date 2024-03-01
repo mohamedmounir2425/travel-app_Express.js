@@ -18,7 +18,7 @@ const auth = async (req, res, next) => {
         resData(res, 500, false, e.message, "unauthorized")
     }
 }
-const authAdmen = async (req, res, next) => {
+const authAdmin = async (req, res, next) => {
     try {
         const token = req.header("Authorization").replace("Bearer ", "");
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -38,5 +38,5 @@ const authAdmen = async (req, res, next) => {
 }
 module.exports = {
     auth,
-    authAdmen
+    authAdmin
 }

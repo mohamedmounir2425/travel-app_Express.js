@@ -20,11 +20,12 @@ const countryRoutes = require('./Routes/countries.route');
 const hotelRoutes = require('./Routes/hotels.route');
 const userRoutes = require('./Routes/users.route')
 const tripsRoutes = require('./Routes/trips.route');
-// const admenRoutes = require('../routes/Admen.route')
+const adminRoutes = require('./Routes/admin.route')
 app.use('/countries', countryRoutes);
 app.use('/hotels', hotelRoutes);
 app.use('/users', userRoutes);
 app.use('/trips',tripsRoutes);
+app.use('/admin',adminRoutes)
 
 // Error handler
 app.all("*",(req,res)=>{

@@ -1,3 +1,4 @@
+const { type } = require('express/lib/response');
 const mongoose = require('mongoose');
 
 const tripSchema = mongoose.Schema({
@@ -62,9 +63,8 @@ const tripSchema = mongoose.Schema({
     offer:{
         type:Number,
     },
-    categoryId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'category'
+    categoryName:{
+        type:String
     },
     tourPlan:[String],
     include:[String],
