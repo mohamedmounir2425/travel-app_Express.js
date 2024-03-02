@@ -1,6 +1,5 @@
 const TripModel = require('../Models/trip.model');
 const resData = require('../helperFunctions');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 class TripController {
     static allTrips = async (req, res) => {
@@ -25,20 +24,10 @@ class TripController {
     static bookTrip = async (req, res) => {
         try {
             const trip = await TripModel.findById(req.params.id);
+            trip.bookingUsers = trip.bookingUsers + 1;
+            await trip.save();
             const user = req.user;
-            if (!trip) {
-                return resData(res, 404, false, {}, "Trip not found");
-            }
-            if (user.bookedTrips.some(trip => trip.tripId === tripId)) {
-                return resData(res, 400, false, {}, "Trip already booked");
-            }
-            const charge = await stripe.charges.create({
-                amount: trip.price * 100,
-                currency: 'usd',
-                source: req.body.token,
-                description: `Charge for ${req.user.email}`,
-              });
-            user.bookedTrips = user.bookedTrips.concat({ tripId: req.params.id });
+            user.bookedTrips = user.bookedTrips.push({ tripId: req.params.id });
             await user.save();
             resData(res, 200, true, user, "success booking");
         }

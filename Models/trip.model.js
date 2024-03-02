@@ -72,6 +72,9 @@ const tripSchema = mongoose.Schema({
     Duration:{
         type:String,
         trim:true
+    },
+    bookingUsers:{
+        type:Number
     }
 },{ timestamps:true})
 

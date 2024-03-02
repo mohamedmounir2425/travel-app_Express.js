@@ -48,14 +48,14 @@ const userSchema = mongoose.Schema({
     },
     bookedTrips:[{
         tripId:{
-                    type: mongoose.Schema.Types.ObjectId,
+                    type: Number,
                     ref:'Trip'
         }
     }
     ],
     favorites:[{
         tripId:{
-                    type: mongoose.Schema.Types.ObjectId,
+                    type: Number,
                     ref:'Trip'
         }
     }
