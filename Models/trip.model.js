@@ -25,8 +25,6 @@ const tripSchema = mongoose.Schema({
         type:Number,
         required:true,
         trim:true,
-        min:100,
-        max:10000
     },
     imgUrl:{
         type:String,
