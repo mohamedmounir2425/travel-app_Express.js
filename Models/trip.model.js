@@ -9,16 +9,13 @@ const tripSchema = mongoose.Schema({
         type:String,
         required:true,
         trim:true,
-        minLength: 3,
-        maxLength: 20,
         lowercase:true,
     },
     description:{
         type:String,
         required:true,
         trim:true,
-        minLength: 10,
-        maxLength: 100,
+
         lowercase:true,
     },
     price:{
