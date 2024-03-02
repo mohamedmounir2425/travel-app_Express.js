@@ -42,25 +42,18 @@ class HotelController {
     }
     static async updateHotel(req,res){
         try {
-            const hotel = await HotelModel.findById(req.params.id)
-            hotel.hotelName = req.body.hotelName
-            hotel.hotelDescription = req.body.hotelDescription
-            hotel.hotelImages = req.body.hotelImages
-            hotel.hotelCountry = req.body.hotelCountry
-            hotel.hotelRate = req.body.hotelRate
-            const updatedHotel = await hotel.save()
-            res.status(200).json(updatedHotel)
+            const hotel = await HotelModel.findByIdAndUpdate(req.params.id,req.body);
+            resData(res,200,true,hotel,'success update');
         } catch (error) {
-            res.status(400).json({message:error})
+            resData(res,500,false,{},error.message)
         }
     }
     static async deleteHotel(req,res){
         try {
-            const hotel = await HotelModel.findById(req.params.id)
-            const deletedHotel = await hotel.remove()
-            res.status(200).json(deletedHotel)
+            const hotel = await HotelModel.findByIdAndDelete(req.params.id)
+            resData(res, 200, true, hotel, "success delete");
         } catch (error) {
-            res.status(500).json({message:error})
+            resData(res, 500, false, {}, error.message);
         }
     }
 }
