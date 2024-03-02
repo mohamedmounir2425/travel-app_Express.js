@@ -27,7 +27,7 @@ class TripController {
             trip.bookingUsers = trip.bookingUsers + 1;
             await trip.save();
             const user = req.user;
-            user.bookedTrips = user.bookedTrips.push({ tripId: req.params.id });
+            user.bookedTrips = user.bookedTrips.push({ tripId: +req.params.id });
             await user.save();
             resData(res, 200, true, user, "success booking");
         }
