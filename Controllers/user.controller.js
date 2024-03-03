@@ -50,10 +50,10 @@ class UserController {
     }
     static logInGoogle = async(req,res)=>{
         try{
-            let user = UserModel.findOne({email:req.body.email})
+            let user = await UserModel.findOne({email:req.body.email})
             if(!user){
                 user = new UserModel({
-                    name:req.body.name,
+                    userName:req.body.name,
                     email:req.body.email,
                     googleId:req.body.googleId,
                     image:req.body.image
@@ -61,11 +61,11 @@ class UserController {
                 })
                 await user.save()
             }
-            const token = await req.user.generateToken();
-            resData(res, 200, true,{user: req.user, token: token}, "success login");
+            const token = await user.generateToken();
+            resData(res, 200, true,{user, token: token}, "success login");
           }
           catch(err){
-            resData(res, 500, false,err, "Failed to login")
+            resData(res, 500, false,err.message, "Failed to login")
           }
     }
     static logOutUser = async (req, res) => {
