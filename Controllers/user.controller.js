@@ -33,7 +33,7 @@ class UserController {
         try {
             const favoriteTrips = req.body.favoriteTrips;
             const user = req.user;
-            user.myFavorites = [...favoriteTrips];
+            user.favorites = favoriteTrips;
             await user.save();
             resData(res, 200, true, user, "success add to favorite");
         }
