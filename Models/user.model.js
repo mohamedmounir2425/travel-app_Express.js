@@ -65,12 +65,12 @@ const userSchema = mongoose.Schema({
 })
 userSchema.virtual("myTrips",{
     ref:"Trip",
-    localField:"bookedTrips._id",
+    localField:"bookedTrips.tripId",
     foreignField:"_id"
 })
 userSchema.virtual("myFavorites",{
     ref:"Trip",
-    localField:"favorites._id",
+    localField:"favorites.tripId",
     foreignField:"_id"
 })
 userSchema.pre("save", async function(){

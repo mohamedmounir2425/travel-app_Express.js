@@ -31,9 +31,9 @@ class UserController {
     }
     static addFavoriteTrips = async (req, res) => {
         try {
-            const favoriteTrips = req.body.favoriteTrips;
+            const favoriteTrips = req.body;
             const user = req.user;
-            user.favorites = [...favoriteTrips];
+            user.favorites = favoriteTrips;
             await user.save();
             resData(res, 200, true, user, "success add to favorite");
         }
