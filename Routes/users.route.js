@@ -11,6 +11,7 @@ router.post('/register',UserController.register);
 router.post('/login',UserController.logInUser);
 router.post('/logout',auth,UserController.logOutUser);
 router.post('/loginGoogle',UserController.logInGoogle);
+router.post('/addFavoriteTrips',auth,UserController.addFavoriteTrips);
 
 // update Methods
 router.patch('/updateUser',auth,UserController.editUser);

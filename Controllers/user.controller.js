@@ -29,6 +29,18 @@ class UserController {
             resData(res, 500, false, {}, e.message);
         }
     }
+    static addFavoriteTrips = async (req, res) => {
+        try {
+            const favoriteTrips = req.body.favoriteTrips;
+            const user = req.user;
+            user.myFavorites = [...favoriteTrips];
+            await user.save();
+            resData(res, 200, true, user, "success add to favorite");
+        }
+        catch (e) {
+            resData(res, 500, false, {}, e.message);
+        }
+    }
 
     static logInUser = async (req, res) => {
         try {
@@ -62,7 +74,15 @@ class UserController {
                 await user.save()
             }
             const token = await user.generateToken();
-            resData(res, 200, true,{user, token: token}, "success login");
+            await user.populate("myTrips");
+            await user.populate("myFavorites");
+            const data = {
+                user,
+                token,
+                bookedTrips: user.myTrips,
+                FavoriteTrips: user.myFavorites
+            }
+            resData(res, 200, true,data, "success login");
           }
           catch(err){
             resData(res, 500, false,err.message, "Failed to login")
