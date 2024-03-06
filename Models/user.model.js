@@ -40,7 +40,7 @@ const userSchema = mongoose.Schema({
     ],
     image:{
         type:String,
-        default:'https://static.storyweaver.org.in/illustrations/48563/large/unknown-clip-art-4.jpg'
+        default:'https://www.flaticon.com/free-icon/man_4140048?term=user&page=1&position=40&origin=tag&related_id=41'
     },
     isAdmin:{
         type:Boolean,
