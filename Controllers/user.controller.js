@@ -7,7 +7,15 @@ class UserController {
             const user = await new UserModel({ ...req.body, isAdmin: false });
             await user.save();
             const token = await user.generateToken();
-            resData(res, 200, true, { user, token }, "success adding");
+            await user.populate("myTrips");
+            await user.populate("myFavorites");
+            const data = {
+                user,
+                token,
+                bookedTrips: user.myTrips,
+                FavoriteTrips: user.myFavorites
+            }
+            resData(res, 200, true, data, "success adding");
         }
         catch (e) {
             resData(res, 500, false, {}, e.message);
@@ -60,16 +68,16 @@ class UserController {
             resData(res, 500, false, {}, e.message);
         }
     }
-    static logInGoogle = async(req,res)=>{
-        try{
-            let user = await UserModel.findOne({email:req.body.email})
-            if(!user){
+    static logInGoogle = async (req, res) => {
+        try {
+            let user = await UserModel.findOne({ email: req.body.email })
+            if (!user) {
                 user = new UserModel({
-                    userName:req.body.name,
-                    email:req.body.email,
-                    googleId:req.body.googleId,
-                    image:req.body.image
-                
+                    userName: req.body.name,
+                    email: req.body.email,
+                    googleId: req.body.googleId,
+                    image: req.body.image
+
                 })
                 await user.save()
             }
@@ -82,11 +90,11 @@ class UserController {
                 bookedTrips: user.myTrips,
                 FavoriteTrips: user.myFavorites
             }
-            resData(res, 200, true,data, "success login");
-          }
-          catch(err){
-            resData(res, 500, false,err.message, "Failed to login")
-          }
+            resData(res, 200, true, data, "success login");
+        }
+        catch (err) {
+            resData(res, 500, false, err.message, "Failed to login")
+        }
     }
     static logOutUser = async (req, res) => {
         try {
@@ -116,17 +124,17 @@ class UserController {
     }
 
     //Admin Methods ----------------------------------------------
-static async loginAdmin(req,res){
-    try{
-        const user = await UserModel.loginMe(req.body.email,req.body.password)
-        if(!user.isAdmin) throw new Error("unauthorized")
-        const token = await user.generateToken();
-        resData(res,200,true,{user,token},"success login")
+    static async loginAdmin(req, res) {
+        try {
+            const user = await UserModel.loginMe(req.body.email, req.body.password)
+            if (!user.isAdmin) throw new Error("unauthorized")
+            const token = await user.generateToken();
+            resData(res, 200, true, { user, token }, "success login")
+        }
+        catch (e) {
+            resData(res, 500, false, {}, e.message)
+        }
     }
-    catch(e){
-        resData(res,500,false,{},e.message)
-    }
-}
     static delUser = async (req, res) => {
         try {
             await userModel.findByIdAndDelete(req.user.id);
@@ -165,7 +173,7 @@ static async loginAdmin(req,res){
         }
     }
 
-    static async setUserAdmin(req, res){
+    static async setUserAdmin(req, res) {
         try {
             const user = UserModel.findById(req.params.id);
             user.isAdmin = true;

@@ -21,11 +21,11 @@ const reviewSchema = mongoose.Schema({
         ref:'User'
     },
     reviewTrip:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:Number,
         ref:'Trip'
     },
     reviewHotel:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:Number,
         ref:'Hotel'
     }
 },{ timestamps:true})

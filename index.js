@@ -21,11 +21,13 @@ const hotelRoutes = require('./Routes/hotels.route');
 const userRoutes = require('./Routes/users.route')
 const tripsRoutes = require('./Routes/trips.route');
 const adminRoutes = require('./Routes/admin.route')
+const reviewRoutes = require('./Routes/reviews.route');
 app.use('/countries', countryRoutes);
 app.use('/hotels', hotelRoutes);
 app.use('/users', userRoutes);
 app.use('/trips',tripsRoutes);
 app.use('/admin',adminRoutes)
+app.use('/reviews',reviewRoutes);
 
 // Error handler
 app.all("*",(req,res)=>{

@@ -15,7 +15,14 @@ class TripController {
     static tripData = async (req, res) => {
         try {
             const trip = await TripModel.findById(req.params.id);
-            resData(res, 200, true, trip, "success get data");
+            await trip.populate("reviews");
+            await trip.populate("hotelData");
+            const data={
+                trip,
+                reviews:trip.reviews,
+                hotelData:trip.hotelData
+            }
+            resData(res, 200, true, data, "success get data");
         }
         catch (e) {
             resData(res, 500, false, {}, e.message);

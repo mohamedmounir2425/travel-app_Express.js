@@ -73,11 +73,11 @@ const tripSchema = mongoose.Schema({
     }
 },{ timestamps:true})
 
-// tripSchema.virtual('reviews',{
-//     ref:'Review',
-//     localField:'_id',
-//     foreignField:'reviewTrip'
-// })
+tripSchema.virtual('reviews',{
+    ref:'Review',
+    localField:'_id',
+    foreignField:'reviewTrip'
+})
 tripSchema.virtual('hotelData',{
     ref:'Hotel',
     localField:'hotel.id',
