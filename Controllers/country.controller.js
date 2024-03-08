@@ -1,15 +1,21 @@
 const CountryModel = require('../Models/country.model')
 const resData = require('../helperFunctions')
 
-class CountryController{
-    static async getCountries(req,res){
-        // try {
-        //     const countries = await CountryModel.find()
-        //     resData(res,200,true,countries,'All Countries')
-        // } catch (error) {
-        //     resData(res,500,false,[],error.message)
-        // }
+class CountryController {
+    static async getCountries(req, res) {
         try {
+            if (req.query.countryName) {
+                const country = await CountryModel.findOne({ countryName: req.query.countryName });
+                await country.populate("hotels");
+                await country.populate("trips");
+                const data = {
+                    country,
+                    hotels: country.hotels,
+                    trips: country.trips
+                }
+                resData(res, 200, true, data, 'Country Data')
+                return
+            }
             const countries = await CountryModel.aggregate([
                 {
                     $lookup: {
@@ -44,25 +50,25 @@ class CountryController{
                     }
                 }
             ]);
-    
+
             resData(res, 200, true, countries, 'All Countries');
         } catch (error) {
             resData(res, 500, false, [], error.message);
         }
     }
-    static async getCountryById(req,res){
+    static async getCountryById(req, res) {
         try {
-            const country = await CountryModel.findOne({_id:req.params.id})
+            const country = await CountryModel.findOne({ _id: req.params.id })
             await country.populate("hotels");
             await country.populate("trips");
             const data = {
                 country,
-                hotels:country.hotels,
-                trips:country.trips
+                hotels: country.hotels,
+                trips: country.trips
             }
-            resData(res,200,true,data,'Country Data')
+            resData(res, 200, true, data, 'Country Data')
         } catch (error) {
-            resData(res,500,false,{},error.message)
+            resData(res, 500, false, {}, error.message)
         }
     }
 }

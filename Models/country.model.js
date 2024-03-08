@@ -11,7 +11,6 @@ const countrySchema = mongoose.Schema({
         trim: true,
         minLength: 3,
         maxLength: 20,
-        lowercase: true,
     },
     countryDescription: {
         type: String,
