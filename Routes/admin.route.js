@@ -1,31 +1,31 @@
-const Users = require('../Controllers/user.controller');
-const Countries = require('../Controllers/country.controller');
-const Hotels = require('../Controllers/hotel.controller');
-const Trips = require('../Controllers/trip.controller');
+const Admin = require('../Controllers/admin.controller');
 const router = require('express').Router();
 const authAdmin = require('../Middlewares/auth').authAdmin;
 
+// Admin Data
+router.get('/adminData',authAdmin, Admin.getAdminData);
 // Login
-router.post('/login', Users.loginAdmin);
+router.post('/login', Admin.loginAdmin);
+
 // COUNTRIES
-router.post('/countries',authAdmin ,Countries.createCountry);
-router.put('/countries/:id',authAdmin, Countries.updateCountry);
-router.delete('/countries/:id',authAdmin, Countries.deleteCountry);
+router.post('/countries',authAdmin ,Admin.createCountry);
+router.put('/countries/:id',authAdmin, Admin.updateCountry);
+router.delete('/countries/:id',authAdmin, Admin.deleteCountry);
 
 
 // HOTELS
-router.post('/hotels',authAdmin, Hotels.createHotel);
-router.put('/hotels/:id',authAdmin, Hotels.updateHotel);
-router.delete('/hotels/:id',authAdmin, Hotels.deleteHotel);
+router.post('/hotels',authAdmin, Admin.createHotel);
+router.put('/hotels/:id',authAdmin, Admin.updateHotel);
+router.delete('/hotels/:id',authAdmin, Admin.deleteHotel);
 
 // TRIPS
-router.post('/trips',authAdmin, Trips.addTrip);
-router.put('/trips/:id',authAdmin, Trips.updateTrip);
-router.delete('/trips/:id',authAdmin, Trips.deleteTrip);
+router.post('/trips',authAdmin, Admin.addTrip);
+router.put('/trips/:id',authAdmin, Admin.updateTrip);
+router.delete('/trips/:id',authAdmin, Admin.deleteTrip);
 
 // USERS
-router.get('/users',authAdmin, Users.getAllUsers);
-router.delete('/users/:id',authAdmin, Users.delUser);
-router.put('/setAdmin/:id',authAdmin, Users.setUserAdmin);
+router.get('/users',authAdmin, Admin.getAllUsers);
+router.delete('/users/:id',authAdmin, Admin.delUser);
+router.put('/setAdmin/:id',authAdmin, Admin.setUserAdmin);
 
 module.exports = router;

@@ -7,8 +7,5 @@ router.get('/',TripsController.allTrips);
 router.get('/:id',TripsController.tripData);
 router.get('/book/:id',auth,TripsController.bookTrip);
 
-// Post Methods
-router.post('/',TripsController.addTrip);
-
 
 module.exports = router;

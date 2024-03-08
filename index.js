@@ -22,6 +22,9 @@ const userRoutes = require('./Routes/users.route')
 const tripsRoutes = require('./Routes/trips.route');
 const adminRoutes = require('./Routes/admin.route')
 const reviewRoutes = require('./Routes/reviews.route');
+app.get('/',(req,res)=>{
+    res.send('Welcome to our API')
+});
 app.use('/countries', countryRoutes);
 app.use('/hotels', hotelRoutes);
 app.use('/users', userRoutes);

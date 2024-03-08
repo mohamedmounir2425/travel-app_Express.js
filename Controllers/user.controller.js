@@ -122,67 +122,6 @@ class UserController {
             resData(res, 500, false, {}, e.message);
         }
     }
-
-    //Admin Methods ----------------------------------------------
-    static async loginAdmin(req, res) {
-        try {
-            const user = await UserModel.loginMe(req.body.email, req.body.password)
-            if (!user.isAdmin) throw new Error("unauthorized")
-            const token = await user.generateToken();
-            resData(res, 200, true, { user, token }, "success login")
-        }
-        catch (e) {
-            resData(res, 500, false, {}, e.message)
-        }
-    }
-    static delUser = async (req, res) => {
-        try {
-            await userModel.findByIdAndDelete(req.user.id);
-            resData(res, 200, true, {}, "success deleting");
-        }
-        catch (e) {
-            resData(res, 500, false, e, "failed deleting");
-        }
-    }
-
-
-    static async getAllUsers(req, res) {
-        try {
-            const users = await UserModel.find();
-            resData(res, 200, true, users, 'All Users');
-        } catch (error) {
-            resData(res, 500, false, [], error.message);
-        }
-    }
-    static async getUserById(req, res) {
-        try {
-            const user = await UserModel.findById(req.params.id);
-            resData(res, 200, true, user, 'User Data');
-        } catch (error) {
-            resData(res, 500, false, {}, error.message);
-        }
-    }
-    // Admin Methods
-    static async createUser(req, res) {
-        try {
-            const user = new UserModel(req.body);
-            const newUser = await user.save();
-            resData(res, 200, true, newUser, 'User Data');
-        } catch (error) {
-            resData(res, 500, false, {}, error.message);
-        }
-    }
-
-    static async setUserAdmin(req, res) {
-        try {
-            const user = UserModel.findById(req.params.id);
-            user.isAdmin = true;
-            return user.save();
-        } catch (error) {
-            resData(res, 500, false, {}, error.message);
-        }
-    }
-
 }
 
 module.exports = UserController;

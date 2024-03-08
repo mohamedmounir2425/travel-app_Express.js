@@ -6,13 +6,40 @@ class HotelController {
         try {
             const hotels = await HotelModel.find();
             resData(res,200,true,hotels,'All Hotels');
+            // const hotels = await HotelModel.aggregate([
+            //     {
+            //         $lookup: {
+            //             from: 'trips', // Name of the Trip collection
+            //             localField: '_id',
+            //             foreignField: 'hotel.id',
+            //             as: 'trips'
+            //         }
+            //     },
+            //     {
+            //         $addFields: {
+            //             tripsNumber: { $size: '$trips' }, // Count the number of trips
+            //         }
+            //     },
+            //     {
+            //         $project: {
+            //             _id: 1,
+            //             hotelName: 1,
+            //             hotelDescription: 1,
+            //             hotelImages: 1,
+            //             hotelCountry: 1,
+            //             hotelRate: 1,
+            //             tripsNumber: 1
+            //         }
+            //     }
+            // ]);
+    
+            // resData(res, 200, true, hotels, 'All hotels');
         } catch (error) {
             resData(res,500,false,[],error.message);
         }
     }
     static async getHotelById(req,res){
         try {
-            console.log(req.params.id)
             const hotel = await HotelModel.findOne({_id:req.params.id});
             // const reviews = await hotel.populate("reviews").execPopulate();
             await hotel.populate("trips");
@@ -23,38 +50,6 @@ class HotelController {
             resData(res,200,true,data,'Hotel Data')
         } catch (error) {
             resData(res,500,false,[],error.message)
-        }
-    }
-    // Admin Methods
-    static async createHotel(req,res){
-        try {
-            const hotel = new HotelModel({
-                hotelName:req.body.hotelName,
-                hotelDescription:req.body.hotelDescription,
-                hotelImages:req.body.hotelImages,
-                hotelCountry:req.body.hotelCountry,
-                hotelRate:req.body.hotelRate
-            })
-            const newHotel = await hotel.save();
-            resData(res,200,true,newHotel,'Hotel Data');
-        } catch (error) {
-            resData(res,500,false,{},error.message)
-        }
-    }
-    static async updateHotel(req,res){
-        try {
-            const hotel = await HotelModel.findByIdAndUpdate(req.params.id,req.body);
-            resData(res,200,true,hotel,'success update');
-        } catch (error) {
-            resData(res,500,false,{},error.message)
-        }
-    }
-    static async deleteHotel(req,res){
-        try {
-            const hotel = await HotelModel.findByIdAndDelete(req.params.id)
-            resData(res, 200, true, hotel, "success delete");
-        } catch (error) {
-            resData(res, 500, false, {}, error.message);
         }
     }
 }

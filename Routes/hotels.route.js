@@ -5,7 +5,4 @@ const HotelController = require('../Controllers/hotel.controller');
 router.get('/',HotelController.getHotels);
 router.get('/:id',HotelController.getHotelById);
 
-// Post Methods
-router.post('/',HotelController.createHotel);
-
 module.exports = router;
