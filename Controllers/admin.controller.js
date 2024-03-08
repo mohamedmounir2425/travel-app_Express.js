@@ -141,7 +141,7 @@ class AdminController {
     static setUserAdmin = async (req, res) => {
         try {
             const user = await UserModel.findById(req.params.id);
-            user.isAdmin = req.body.isAdmin;
+            user.isAdmin = !user.isAdmin;
             await user.save();
             resData(res, 200, true, user, "success update");
         }
