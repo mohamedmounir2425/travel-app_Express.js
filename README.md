@@ -22,6 +22,10 @@ travel app API built with Express is a project for ITI professional scholarship
 - hashing passwords
 - Authentication and Authorization for Admin (Dashboard)
 
+## ERD
+
+![ERD](ERD.png)
+
 ## Run Locally  
 
 Clone the project  
