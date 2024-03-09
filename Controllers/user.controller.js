@@ -1,6 +1,5 @@
 const UserModel = require('../Models/user.model');
-const resData = require('../helperFunctions');
-// const bcrypt = require('bcryptjs');
+const {resData} = require('../helperFunctions');
 class UserController {
     static register = async (req, res) => {
         try {

@@ -3,7 +3,7 @@ const HotelModel = require('../Models/hotel.model')
 const TripModel = require('../Models/trip.model');
 const UserModel = require('../Models/user.model');
 
-const resData = require('../helperFunctions');
+const {resData} = require('../helperFunctions');
 
 class AdminController {
 

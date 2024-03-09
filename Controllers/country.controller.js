@@ -1,5 +1,5 @@
 const CountryModel = require('../Models/country.model')
-const resData = require('../helperFunctions')
+const {resData} = require('../helperFunctions')
 
 class CountryController {
     static async getCountries(req, res) {

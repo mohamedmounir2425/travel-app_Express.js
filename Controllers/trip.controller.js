@@ -1,14 +1,18 @@
 const TripModel = require('../Models/trip.model');
-const resData = require('../helperFunctions');
+const {resData, shuffleArray} = require('../helperFunctions');
 
 class TripController {
     static allTrips = async (req, res) => {
         try {
-            const trips = await TripModel.find();
-            resData(res, 200, true, trips, "success get data");
-        }
-        catch (e) {
-            resData(res, 500, false, {}, e.message);
+            // Fetch all trips
+            let trips = await TripModel.find();
+            
+            // Shuffle the array randomly
+            trips = shuffleArray(trips);
+    
+            resData(res, 200, true, trips, "Successfully retrieved all trips in random order.");
+        } catch (error) {
+            resData(res, 500, false, {}, error.message);
         }
     }
 
