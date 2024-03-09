@@ -3,7 +3,7 @@ const resData = require('../helperFunctions');
 class ReviewController{
     static addReview = async (req, res) => {
         try {
-            const review = await new ReviewModel({ ...req.body, reviewOwner: req.user._id });
+            const review = await new ReviewModel({ ...req.body, reviewOwnerId: req.user._id, reviewOwnerName: req.user.userName, reviewOwnerImage: req.user.image});
             await review.save();
             resData(res, 200, true, review, "success adding");
         }

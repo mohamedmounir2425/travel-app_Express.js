@@ -16,9 +16,17 @@ const reviewSchema = mongoose.Schema({
         min:1,
         max:5
     },
-    reviewOwner:{
+    reviewOwnerId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
+    },
+    reviewOwnerName:{
+        type: String,
+        trim: true,
+    },
+    reviewOwnerImage:{
+        type: String,
+        default: 'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png'
     },
     reviewTrip:{
         type:Number,
@@ -30,11 +38,11 @@ const reviewSchema = mongoose.Schema({
     }
 },{ timestamps:true})
 
-reviewSchema.virtual('reviewOwnerDetails',{
-    ref:'Trip',
-    localField:'_id',
-    foreignField:'tripOwner'
-})
+// reviewSchema.virtual('reviewOwnerDetails',{
+//     ref:'Trip',
+//     localField:'_id',
+//     foreignField:'tripOwner'
+// })
 
 const Review = mongoose.model('Review',reviewSchema);
 module.exports = Review;
